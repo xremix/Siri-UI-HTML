@@ -17,6 +17,11 @@ async function startMicrophone() {
         
         // Start analyzing audio
         isListening = true;
+        
+        // Restore full saturation when microphone is active
+        const container = document.querySelector('.voice-visualization-container');
+        container.style.filter = 'saturate(1)';
+        
         analyzeAudio();
     } catch (error) {
         console.error('Error accessing microphone:', error);
@@ -50,6 +55,10 @@ function stopMicrophone() {
         audioContext.close();
     }
     isListening = false;
+    
+    // Decrease saturation of the core container when microphone is inactive
+    const container = document.querySelector('.voice-visualization-container');
+    container.style.filter = 'saturate(0.1)';
 }
 
 function inputVolumeChanged(loudness) {
@@ -69,6 +78,9 @@ function inputVolumeChanged(loudness) {
 // Wait for DOM to be fully loaded before adding event listeners
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.querySelector('.voice-visualization-container');
+    
+    // Set initial saturation to 0.1 since microphone is initially inactive
+    container.style.filter = 'saturate(0.1)';
     
     // Add click event listener to the container
     container.addEventListener('click', () => {
