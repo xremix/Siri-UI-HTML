@@ -5,15 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Siri Visualizer</title>
     <style>
-        :root {
-            /* this should be the same as in the microphone.js file */
-            --min-scale: 0.6;
-            --max-scale: 1.0;
-            --initial-scale: 0.6;
-            --layer1-scale: 1.2;
-            --animation-scale-min: 0.8;
-            --animation-scale-max: 1.0;
-        }
         body {
             margin: 0;
             background: #000;
@@ -22,64 +13,11 @@
             align-items: center;
             justify-content: center;
         }
-        .voice-visualization-container {
-            position: relative;
-            width: 300px;
-            height: 300px;
-        }
-        .layer-wrapper {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(var(--initial-scale));
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.3s ease-out;
-        }
-        img {
-            position: absolute;
-            max-width: 100%;
-            height: auto;
-        }
-        @keyframes rotate {
-            0% {
-                transform: rotate(0deg) scale(var(--animation-scale-min));
-            }
-            50% {
-                transform: rotate(180deg) scale(var(--animation-scale-max));
-            }
-            100% {
-                transform: rotate(360deg) scale(var(--animation-scale-min));
-            }
-        }
-        .layer-wrapper:nth-child(1) img {
-            transform: scale(var(--layer1-scale));
-        }
-        .layer-wrapper:nth-child(2) img {
-            animation: rotate 4s infinite linear;
-        }
-        .layer-wrapper:nth-child(3) img {
-            animation: rotate 4s infinite linear reverse;
-        }
-        .layer-wrapper:nth-child(4) img {
-            animation: rotate 5s infinite linear;
-        }
-        .layer-wrapper:nth-child(5) img {
-            animation: rotate 6s infinite linear;
-        }
     </style>
+    <script src="siri-visualizer.js"></script>
     <script src="microphone.js"></script>
 </head>
 <body>
-    <div class="voice-visualization-container">
-        <div class="layer-wrapper"><img src="assets/BackgroundCircle-alt.png" alt="Siri Visualizer Layer 4"></div>
-        <div class="layer-wrapper"><img src="assets/Layer1.png" alt="Siri Visualizer Layer 1"></div>
-        <div class="layer-wrapper"><img src="assets/Layer 2.png" alt="Siri Visualizer Layer 2"></div> 
-        <div class="layer-wrapper"><img src="assets/Layer 4.png" alt="Siri Visualizer Layer 4"></div> 
-        <div class="layer-wrapper"><img src="assets/Layer 3.png" alt="Siri Visualizer Layer 3"></div> 
-    </div>
+    <siri-visualizer></siri-visualizer>
 </body>
 </html>
