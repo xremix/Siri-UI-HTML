@@ -2,6 +2,10 @@
 
 An interactive web visualization that mimics Apple's Siri interface, responding to your voice input in real-time.
 
+[Try it out](https://raw.githack.com/xremix/Siri-UI-HTML/main/index.html)
+
+![Screenshot](Screenshot.png)
+
 ## Features
 
 - Interactive Siri-like circular visualization
