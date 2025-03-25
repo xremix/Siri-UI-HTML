@@ -13,47 +13,88 @@
             align-items: center;
             justify-content: center;
         }
-        .image-container {
+        .voice-visualization-container {
             position: relative;
             width: 300px;
             height: 300px;
         }
-        img {
+        .layer-wrapper {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        img {
+            position: absolute;
             max-width: 100%;
             height: auto;
             opacity: 0.8;
         }
         @keyframes rotate {
             0% {
-                transform: translate(-50%, -50%) rotate(0deg) scale(0.9);
+                transform: rotate(0deg) scale(0.9);
             }
             50% {
-                transform: translate(-50%, -50%) rotate(180deg) scale(1.1);
+                transform: rotate(180deg) scale(1.1);
             }
             100% {
-                transform: translate(-50%, -50%) rotate(360deg) scale(0.9);
+                transform: rotate(360deg) scale(0.9);
             }
         }
-        img:nth-child(1) {
+        .layer-wrapper:nth-child(1) img {
             animation: rotate 3s infinite linear;
         }
-        img:nth-child(2) {
+        .layer-wrapper:nth-child(2) img {
             animation: rotate 3s infinite linear reverse;
         }
-        img:nth-child(3) {
+        .layer-wrapper:nth-child(3) img {
             animation: rotate 4s infinite linear;
         }
     </style>
+    <script>
+        function inputVolumeChanged(loudness) {
+            // Ensure loudness is between 0 and 1
+            loudness = Math.max(0, Math.min(1, loudness));
+            
+            // Calculate the scale based on loudness (0 to 1.2)
+            const scale = 1 + (loudness * 0.5);
+            
+            // Apply the scale to each layer with a slight delay
+            const layers = document.querySelectorAll('.voice-visualization-container .layer-wrapper');
+            layers.forEach((layer, index) => {
+                // Add a small delay between layers for a wave effect
+                setTimeout(() => {
+                    layer.style.transform = `translate(-50%, -50%) scale(${scale})`;
+                }, index * 50);
+            });
+        }
+
+        // Wait for DOM to be fully loaded before adding event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add click event listener to the container
+            document.querySelector('.voice-visualization-container').addEventListener('click', () => {
+                const randomLoudness = Math.random(); // Generates a random number between 0 and 1
+                inputVolumeChanged(randomLoudness);
+            });
+        });
+    </script>
 </head>
 <body>
-    <div class="image-container">
-        <img src="assets/Vector 22.png" alt="Siri Visualizer Layer 1">
-        <img src="assets/Vector 23.png" alt="Siri Visualizer Layer 2">
-        <img src="assets/Vector 24.png" alt="Siri Visualizer Layer 3">
+    <div class="voice-visualization-container">
+        <div class="layer-wrapper">
+            <img src="assets/Vector 22.png" alt="Siri Visualizer Layer 1">
+        </div>
+        <div class="layer-wrapper">
+            <img src="assets/Vector 23.png" alt="Siri Visualizer Layer 2">
+        </div>
+        <div class="layer-wrapper">
+            <img src="assets/Vector 24.png" alt="Siri Visualizer Layer 3">
+        </div>
     </div>
 </body>
 </html>
