@@ -12,12 +12,10 @@ class SiriVisualizer extends HTMLElement {
                     display: block;
                     width: 300px;
                     height: 300px;
-                }
-                :root {
                     --min-scale: 0.6;
                     --max-scale: 1.0;
                     --initial-scale: 0.6;
-                    --layer1-scale: 1.1;
+                    --layer1-scale: 1.3;
                 }
                 .voice-visualization-container {
                     position: relative;
@@ -29,7 +27,7 @@ class SiriVisualizer extends HTMLElement {
                     position: absolute;
                     top: 50%;
                     left: 50%;
-                    transform: translate(-50%, -50%) scale(0.6);
+                    transform: translate(-50%, -50%) scale(var(--initial-scale));
                     width: 100%;
                     height: 100%;
                     display: flex;
@@ -89,7 +87,7 @@ class SiriVisualizer extends HTMLElement {
     updateScale(scale) {
         const layers = this.shadowRoot.querySelectorAll('.layer-wrapper');
         layers.forEach(layer => {
-            layer.style.transform = `translate(-50%, -50%) scale(${scale})`;
+            layer.style.setProperty('--initial-scale', scale);
         });
     }
 }
