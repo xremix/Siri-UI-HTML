@@ -58,7 +58,7 @@ function stopMicrophone() {
     
     // Decrease saturation of the core container when microphone is inactive
     const container = document.querySelector('.voice-visualization-container');
-    container.style.filter = 'saturate(0.1)';
+    container.style.filter = 'saturate(0.3)';
 }
 
 function inputVolumeChanged(loudness) {
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.querySelector('.voice-visualization-container');
     
     // Set initial saturation to 0.1 since microphone is initially inactive
-    container.style.filter = 'saturate(0.1)';
+    container.style.filter = 'saturate(0.3)';
     
     // Add click event listener to the container
     container.addEventListener('click', () => {
