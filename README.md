@@ -8,10 +8,13 @@ An interactive web visualization that mimics Apple's Siri interface, responding 
 
 ## Features
 
-- Interactive Siri-like circular visualization
-- Real-time voice input processing
-- Dynamic animations that respond to your voice
+- Interactive Siri-like circular visualization with multiple animated layers
+- Real-time voice input processing using Web Audio API
+- Dynamic scaling that responds to voice volume
+- Saturation effects that indicate active/inactive state
+- Smooth animations with independent layer rotation speeds
 - Click to start/stop microphone
+- Local audio processing - no data is sent to external servers
 
 ## Getting Started
 

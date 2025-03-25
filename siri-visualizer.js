@@ -5,13 +5,33 @@ class SiriVisualizer extends HTMLElement {
         this.isListening = false;
     }
 
+    static get observedAttributes() {
+        return ['width', 'height'];
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+        if (oldValue !== newValue) {
+            this.updateDimensions();
+        }
+    }
+
+    updateDimensions() {
+        const width = this.getAttribute('width') || '300px';
+        const height = this.getAttribute('height') || '300px';
+        this.shadowRoot.querySelector('.voice-visualization-container').style.width = width;
+        this.shadowRoot.querySelector('.voice-visualization-container').style.height = height;
+    }
+
     connectedCallback() {
+        const width = this.getAttribute('width') || '300px';
+        const height = this.getAttribute('height') || '300px';
+        
         this.shadowRoot.innerHTML = `
             <style>
                 :host {
                     display: block;
-                    width: 300px;
-                    height: 300px;
+                    width: ${width};
+                    height: ${height};
                     --min-scale: 0.6;
                     --max-scale: 1.0;
                     --initial-scale: 0.6;
