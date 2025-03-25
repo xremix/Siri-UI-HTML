@@ -62,15 +62,13 @@
             loudness = Math.max(0, Math.min(1, loudness));
             
             // Calculate the scale based on loudness (0 to 1.2)
-            const scale = 1 + (loudness * 0.5);
+            const scale = 1 + (loudness * 0.3);
             
             // Apply the scale to each layer with a slight delay
             const layers = document.querySelectorAll('.voice-visualization-container .layer-wrapper');
             layers.forEach((layer, index) => {
                 // Add a small delay between layers for a wave effect
-                setTimeout(() => {
                     layer.style.transform = `translate(-50%, -50%) scale(${scale})`;
-                }, index * 50);
             });
         }
 
@@ -94,6 +92,9 @@
         </div>
         <div class="layer-wrapper">
             <img src="assets/Vector 24.png" alt="Siri Visualizer Layer 3">
+        </div>
+        <div class="layer-wrapper">
+            <img src="assets/BackgroundCircle.png" alt="Siri Visualizer Layer 4">
         </div>
     </div>
 </body>
