@@ -75,10 +75,10 @@ function inputVolumeChanged(loudness) {
     // Calculate the scale based on loudness
     const scale = MIN_SCALE + (loudness * SCALE_RANGE);
     
-    // Apply the scale to each layer
+    // Apply the scale to each layer using CSS variable
     const layers = document.querySelectorAll('.voice-visualization-container .layer-wrapper');
     layers.forEach(layer => {
-        layer.style.transform = `translate(-50%, -50%) scale(${scale})`;
+        layer.style.setProperty('--initial-scale', scale);
     });
 }
 
