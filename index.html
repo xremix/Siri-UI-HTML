@@ -61,38 +61,15 @@
             transform: scale(1.4);
         }
     </style>
-    <script>
-        function inputVolumeChanged(loudness) {
-            // Ensure loudness is between 0 and 1
-            loudness = Math.max(0, Math.min(1, loudness));
-            
-            // Calculate the scale based on loudness (0 to 1.2)
-            const scale = 1 + (loudness * 0.3);
-            
-            // Apply the scale to each layer
-            const layers = document.querySelectorAll('.voice-visualization-container .layer-wrapper');
-            layers.forEach(layer => {
-                layer.style.transform = `translate(-50%, -50%) scale(${scale})`;
-            });
-        }
-
-        // Wait for DOM to be fully loaded before adding event listeners
-        document.addEventListener('DOMContentLoaded', () => {
-            // Add click event listener to the container
-            document.querySelector('.voice-visualization-container').addEventListener('click', () => {
-                const randomLoudness = Math.random(); // Generates a random number between 0 and 1
-                inputVolumeChanged(randomLoudness);
-            });
-        });
-    </script>
+    <script src="microphone.js"></script>
 </head>
 <body>
     <div class="voice-visualization-container">
         <div class="layer-wrapper">
-            <img src="assets/Vector 22.png" alt="Siri Visualizer Layer 1">
+            <img src="assets/Vector 23.png" alt="Siri Visualizer Layer 2">
         </div>
         <div class="layer-wrapper">
-            <img src="assets/Vector 23.png" alt="Siri Visualizer Layer 2">
+            <img src="assets/Vector 22.png" alt="Siri Visualizer Layer 1">
         </div>
         <div class="layer-wrapper">
             <img src="assets/Vector 24.png" alt="Siri Visualizer Layer 3">
