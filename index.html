@@ -28,6 +28,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: transform 0.3s ease-out;
         }
         img {
             position: absolute;
@@ -55,6 +56,10 @@
         .layer-wrapper:nth-child(3) img {
             animation: rotate 4s infinite linear;
         }
+
+        .layer-wrapper:nth-child(4) img {
+            transform: scale(1.4);
+        }
     </style>
     <script>
         function inputVolumeChanged(loudness) {
@@ -64,11 +69,10 @@
             // Calculate the scale based on loudness (0 to 1.2)
             const scale = 1 + (loudness * 0.3);
             
-            // Apply the scale to each layer with a slight delay
+            // Apply the scale to each layer
             const layers = document.querySelectorAll('.voice-visualization-container .layer-wrapper');
-            layers.forEach((layer, index) => {
-                // Add a small delay between layers for a wave effect
-                    layer.style.transform = `translate(-50%, -50%) scale(${scale})`;
+            layers.forEach(layer => {
+                layer.style.transform = `translate(-50%, -50%) scale(${scale})`;
             });
         }
 
