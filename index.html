@@ -48,35 +48,27 @@
             }
         }
         .layer-wrapper:nth-child(1) img {
-            animation: rotate 3s infinite linear;
+            transform: scale(1.4);
         }
         .layer-wrapper:nth-child(2) img {
-            animation: rotate 3s infinite linear reverse;
+            animation: rotate 3s infinite linear;
         }
         .layer-wrapper:nth-child(3) img {
+            animation: rotate 3s infinite linear reverse;
+        }
+        .layer-wrapper:nth-child(4) img {
             animation: rotate 4s infinite linear;
         }
 
-        .layer-wrapper:nth-child(4) img {
-            transform: scale(1.4);
-        }
     </style>
     <script src="microphone.js"></script>
 </head>
 <body>
     <div class="voice-visualization-container">
-        <div class="layer-wrapper">
-            <img src="assets/Vector 23.png" alt="Siri Visualizer Layer 2">
-        </div>
-        <div class="layer-wrapper">
-            <img src="assets/Vector 22.png" alt="Siri Visualizer Layer 1">
-        </div>
-        <div class="layer-wrapper">
-            <img src="assets/Vector 24.png" alt="Siri Visualizer Layer 3">
-        </div>
-        <div class="layer-wrapper">
-            <img src="assets/BackgroundCircle.png" alt="Siri Visualizer Layer 4">
-        </div>
+        <div class="layer-wrapper"><img src="assets/BackgroundCircle.png" alt="Siri Visualizer Layer 4"></div>
+        <div class="layer-wrapper"><img src="assets/Vector 23.png" alt="Siri Visualizer Layer 2"></div>
+        <div class="layer-wrapper"><img src="assets/Vector 24.png" alt="Siri Visualizer Layer 3"></div> 
+        <div class="layer-wrapper"><img src="assets/Vector 22.png" alt="Siri Visualizer Layer 1"></div> 
     </div>
 </body>
 </html>
