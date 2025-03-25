@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siri Visualizer</title>
+    <style>
+        body {
+            margin: 0;
+            background: #000;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .image-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+        img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 100%;
+            height: auto;
+            opacity: 0.8;
+        }
+        @keyframes rotate {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg) scale(0.9);
+            }
+            50% {
+                transform: translate(-50%, -50%) rotate(180deg) scale(1.1);
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg) scale(0.9);
+            }
+        }
+        img:nth-child(1) {
+            animation: rotate 3s infinite linear;
+        }
+        img:nth-child(2) {
+            animation: rotate 3s infinite linear reverse;
+        }
+        img:nth-child(3) {
+            animation: rotate 4s infinite linear;
+        }
+    </style>
+</head>
+<body>
+    <div class="image-container">
+        <img src="assets/Vector 22.png" alt="Siri Visualizer Layer 1">
+        <img src="assets/Vector 23.png" alt="Siri Visualizer Layer 2">
+        <img src="assets/Vector 24.png" alt="Siri Visualizer Layer 3">
+    </div>
+</body>
+</html>
