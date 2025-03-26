@@ -18,6 +18,15 @@
     <script src="microphone.js"></script>
 </head>
 <body>
-    <siri-visualizer width="400px" height="400px"></siri-visualizer>
+    <siri-visualizer width="400px" height="400px" asset-path="assets"></siri-visualizer>
+    <script>
+        document.querySelector('siri-visualizer').addEventListener('click', function() {
+            if (this.isListening) {
+                this.stop();
+            } else {
+                this.record();
+            }
+        });
+    </script>
 </body>
 </html>

@@ -1,40 +1,84 @@
 class SiriVisualizer extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-        this.isListening = false;
-    }
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+    this.isListening = false;
+  }
 
-    static get observedAttributes() {
-        return ['width', 'height'];
-    }
+  static get observedAttributes() {
+    return ["width", "height", "asset-path"];
+  }
 
-    attributeChangedCallback(name, oldValue, newValue) {
-        if (oldValue !== newValue) {
-            this.updateDimensions();
-        }
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue !== newValue) {
+      if (name === "width" || name === "height") {
+        this.updateDimensions();
+      } else if (name === "asset-path") {
+        this.updateAssetPaths();
+      }
     }
+  }
 
-    updateDimensions() {
-        const width = this.getAttribute('width') || '300px';
-        const height = this.getAttribute('height') || '300px';
-        this.shadowRoot.querySelector('.voice-visualization-container').style.width = width;
-        this.shadowRoot.querySelector('.voice-visualization-container').style.height = height;
+  updateAssetPaths() {
+    const assetPath = this.getAttribute("asset-path") || "assets/siri-visualizer/assets";
+    const images = this.shadowRoot.querySelectorAll("img");
+    images.forEach(img => {
+      const currentSrc = img.getAttribute("src");
+      const fileName = currentSrc.split("/").pop();
+      img.src = `${assetPath}/${fileName}`;
+    });
+  }
+
+  updateDimensions() {
+    const width = this.getAttribute("width") || "300px";
+    const height = this.getAttribute("height") || "300px";
+    const container = this.shadowRoot.querySelector(".voice-visualization-container");
+    if (container) {
+      container.style.width = width;
+      container.style.height = height;
     }
+  }
 
-    connectedCallback() {
-        const width = this.getAttribute('width') || '300px';
-        const height = this.getAttribute('height') || '300px';
-        
-        this.shadowRoot.innerHTML = `
+  record() {
+    if (!this.isListening) {
+      this.isListening = true;
+      this.dispatchEvent(
+        new CustomEvent("toggleMicrophone", {
+          bubbles: true,
+          composed: true,
+          detail: { action: "start" }
+        })
+      );
+    }
+  }
+
+  stop() {
+    if (this.isListening) {
+      this.isListening = false;
+      this.dispatchEvent(
+        new CustomEvent("toggleMicrophone", {
+          bubbles: true,
+          composed: true,
+          detail: { action: "stop" }
+        })
+      );
+    }
+  }
+
+  connectedCallback() {
+    const width = this.getAttribute("width") || "300px";
+    const height = this.getAttribute("height") || "300px";
+    const assetPath = this.getAttribute("asset-path") || "assets/siri-visualizer/assets";
+
+    this.shadowRoot.innerHTML = `
             <style>
                 :host {
                     display: block;
                     width: ${width};
                     height: ${height};
-                    --min-scale: 0.6;
+                    --min-scale: 0.5;
                     --max-scale: 1.0;
-                    --initial-scale: 0.6;
+                    --initial-scale: 0.5;
                     --layer1-scale: 1.3;
                 }
                 .voice-visualization-container {
@@ -61,55 +105,75 @@ class SiriVisualizer extends HTMLElement {
                     height: auto;
                 }
                 @keyframes rotate {
-                    0% { transform: rotate(0deg); }
-                    100% { transform: rotate(360deg); }
+                    0% { 
+                        transform: rotate(0deg) scaleX(1);
+                    }
+                    50% { 
+                        transform: rotate(180deg) scaleX(0.8);
+                    }
+                    100% { 
+                        transform: rotate(360deg) scaleX(1);
+                    }
                 }
-                .layer-wrapper:nth-child(1) img {
+                @keyframes rotate3d{
+                    0% { transform: rotate3d(0, 0, 0, 0deg); }
+                    100% { transform: rotate3d(1, 1, 1, 360deg); }
+                }
+                .layer-wrapper#background-circle-active img {
+                    transform: scale(var(--layer1-scale));
+                    opacity: 0;
+                    transition: opacity 0.1s ease-out;
+                }
+                .layer-wrapper#background-circle img {
                     transform: scale(var(--layer1-scale));
                 }
-                .layer-wrapper:nth-child(2) img {
+                .layer-wrapper#layer-1 img {
                     animation: rotate 4s infinite linear;
                 }
-                .layer-wrapper:nth-child(3) img {
+                .layer-wrapper#layer-2 img {
                     animation: rotate 4s infinite linear reverse;
                 }
-                .layer-wrapper:nth-child(4) img {
-                    animation: rotate 5s infinite linear;
+                .layer-wrapper#layer-4 img {
+                    animation: rotate3d 8s infinite linear;
                 }
-                .layer-wrapper:nth-child(5) img {
+                .layer-wrapper#layer-3 img {
+                    opacity: 0.7;
                     animation: rotate 6s infinite linear;
                 }
             </style>
             <div class="voice-visualization-container">
-                <div class="layer-wrapper"><img src="assets/BackgroundCircle-alt.png" alt="Siri Visualizer Layer 4"></div>
-                <div class="layer-wrapper"><img src="assets/Layer1.png" alt="Siri Visualizer Layer 1"></div>
-                <div class="layer-wrapper"><img src="assets/Layer 2.png" alt="Siri Visualizer Layer 2"></div> 
-                <div class="layer-wrapper"><img src="assets/Layer 4.png" alt="Siri Visualizer Layer 4"></div> 
-                <div class="layer-wrapper"><img src="assets/Layer 3.png" alt="Siri Visualizer Layer 3"></div> 
+                <div class="layer-wrapper" id="background-circle-active"><img src="${assetPath}/BackgroundCircle-Active.png" alt="Siri Visualizer Active Background"></div>
+                <div class="layer-wrapper" id="background-circle"><img src="${assetPath}/BackgroundCircle-alt.png" alt="Siri Visualizer Layer 4"></div>
+                <div class="layer-wrapper" id="layer-1"><img src="${assetPath}/Layer1.png" alt="Siri Visualizer Layer 1"></div>
+                <div class="layer-wrapper" id="layer-2"><img src="${assetPath}/Layer 2.png" alt="Siri Visualizer Layer 2"></div> 
+                <div class="layer-wrapper" id="layer-4"><img src="${assetPath}/Layer 4.png" alt="Siri Visualizer Layer 4"></div> 
+                <div class="layer-wrapper" id="layer-3"><img src="${assetPath}/Layer 3.png" alt="Siri Visualizer Layer 3"></div> 
             </div>
         `;
+  }
 
-        // Add click event listener
-        const container = this.shadowRoot.querySelector('.voice-visualization-container');
-        container.addEventListener('click', () => {
-            this.dispatchEvent(new CustomEvent('toggleMicrophone', {
-                bubbles: true,
-                composed: true
-            }));
-        });
-    }
+  setSaturation(value) {
+    const container = this.shadowRoot.querySelector(
+      ".voice-visualization-container"
+    );
+    container.style.filter = `saturate(${value})`;
+  }
 
-    setSaturation(value) {
-        const container = this.shadowRoot.querySelector('.voice-visualization-container');
-        container.style.filter = `saturate(${value})`;
-    }
+  updateScale(scale) {
+    const layers = this.shadowRoot.querySelectorAll(".layer-wrapper");
+    layers.forEach((layer) => {
+      layer.style.setProperty("--initial-scale", scale);
+    });
+  }
 
-    updateScale(scale) {
-        const layers = this.shadowRoot.querySelectorAll('.layer-wrapper');
-        layers.forEach(layer => {
-            layer.style.setProperty('--initial-scale', scale);
-        });
+  updateActiveBackgroundOpacity(volume) {
+    const activeBackground = this.shadowRoot.querySelector("#background-circle-active img");
+    if (activeBackground) {
+      // Convert volume to opacity (assuming volume is between 0 and 1)
+      const opacity = Math.min(Math.max(volume, 0), 1);
+      activeBackground.style.opacity = opacity;
     }
+  }
 }
 
-customElements.define('siri-visualizer', SiriVisualizer); 
+customElements.define("siri-visualizer", SiriVisualizer);
