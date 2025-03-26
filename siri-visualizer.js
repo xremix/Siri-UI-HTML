@@ -79,7 +79,7 @@ class SiriVisualizer extends HTMLElement {
                     --min-scale: 0.5;
                     --max-scale: 1.0;
                     --initial-scale: 0.5;
-                    --layer1-scale: 1.3;
+                    --layer1-scale: 1;
                 }
                 .voice-visualization-container {
                     position: relative;
@@ -115,17 +115,24 @@ class SiriVisualizer extends HTMLElement {
                         transform: rotate(360deg) scaleX(1);
                     }
                 }
+                @keyframes rotateStrongScale {
+                    0% { 
+                        transform: rotate(0deg) scaleX(1);
+                    }
+                    50% { 
+                        transform: rotate(180deg) scaleX(0.3);
+                    }
+                    100% { 
+                        transform: rotate(360deg) scaleX(1);
+                    }
+                }
                 @keyframes rotate3d{
                     0% { transform: rotate3d(0, 0, 0, 0deg); }
                     100% { transform: rotate3d(1, 1, 1, 360deg); }
                 }
                 .layer-wrapper#background-circle-active img {
-                    transform: scale(var(--layer1-scale));
                     opacity: 0;
                     transition: opacity 0.1s ease-out;
-                }
-                .layer-wrapper#background-circle img {
-                    transform: scale(var(--layer1-scale));
                 }
                 .layer-wrapper#layer-1 img {
                     animation: rotate 4s infinite linear;
@@ -134,7 +141,7 @@ class SiriVisualizer extends HTMLElement {
                     animation: rotate 4s infinite linear reverse;
                 }
                 .layer-wrapper#layer-4 img {
-                    animation: rotate3d 8s infinite linear;
+                    animation: rotateStrongScale 8s infinite linear;
                 }
                 .layer-wrapper#layer-3 img {
                     opacity: 0.7;
@@ -148,6 +155,7 @@ class SiriVisualizer extends HTMLElement {
                 <div class="layer-wrapper" id="layer-2"><img src="${assetPath}/Layer 2.png" alt="Siri Visualizer Layer 2"></div> 
                 <div class="layer-wrapper" id="layer-4"><img src="${assetPath}/Layer 4.png" alt="Siri Visualizer Layer 4"></div> 
                 <div class="layer-wrapper" id="layer-3"><img src="${assetPath}/Layer 3.png" alt="Siri Visualizer Layer 3"></div> 
+                <div class="layer-wrapper" id="layer-5"><img src="${assetPath}/Layer 5.png" alt="Siri Visualizer Layer 5"></div> 
             </div>
         `;
   }
